@@ -1,3 +1,23 @@
 {% macro render_todo(todo) %}
-    <li> Description: {{ todo.to_dict().description }}</li>
+
+
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div class="mr-auto p-2">
+             Task: {{ todo.to_dict().description }}
+        </div>
+
+        <div class="p-2">
+            <button type="button" class="btn btn-outline-warning">
+                {% if todo.to_dict().done %}
+                    Done
+                {% else %}
+                    To-do
+                {% endif %}
+            </button>
+
+        </div>
+        <div class="p-2">
+            <a class="btn btn-outline-danger" href="{{ url_for('delete', todo_id=todo.id)}}">Delete</a>
+        </div>
+    </li>
 {% endmacro %}

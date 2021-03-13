@@ -15,18 +15,18 @@ class MainTest(TestCase):
 
     def test_app_in_test_mode(self):
         self.assertTrue(current_app.config['TESTING'])
-    
+
     def test_index_redirects(self):
         response = self.client.get(url_for('index'))
-        self.assertRedirects(response, url_for('hello'))
+        self.assertRedirects(response, url_for('home'))
 
-    def test_hello_get(self):
-        response = self.client.get(url_for('hello'))
+    def test_home_get(self):
+        response = self.client.get(url_for('home'))
         self.assert_200(response)
 
-    def test_hello_post(self):
-        
-        response = self.client.post(url_for('hello'))
+    def test_home_post(self):
+
+        response = self.client.post(url_for('home'))
         self.assertTrue(response.status_code, 405)
 
     def test_auth_blueprint_exists(self):
@@ -41,7 +41,7 @@ class MainTest(TestCase):
         self.assertTemplateUsed('login.html')
 
     def test_auth_login_post(self):
-    
+
         fake_form = {
             'username': 'fake',
             'password': 'fake-password'
