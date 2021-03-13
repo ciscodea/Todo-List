@@ -6,11 +6,20 @@
     {%if username %} 
         <h1>Bienvenido, {{ username | capitalize }}</h1>
     {% endif %}
-    {% if user_ip %}
-        <h3>Tu ip es {{user_ip}}</h3>
-    {% else %}
-        <a href="{{ url_for('index') }}">obtener ip</a>
-    {% endif %}
+    <div class="container">
+        <h2>Crea una nueva tarea</h2>
+        <form  method="POST">
+            {{ todo_form.csrf_token }}
+
+            <div class="form-group">
+                <label for="Description">{{ todo_form.description.label}}</label>
+                {{ todo_form.description(class_='form-control') }}
+            </div>
+
+            {{ todo_form.submit(class_='btn btn-primary') }}
+            
+        </form>
+    </div>
 
     <ul>
         {% for  todo in todos %}

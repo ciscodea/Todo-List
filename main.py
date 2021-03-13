@@ -7,22 +7,20 @@ from flask import (
     url_for,
     flash
 )
-
+from app.firestore_service import get_users, get_todos, set_todo
 import unittest
 from app import create_app
-from app.forms import LoginForm
+from app.forms import LoginForm, TodoForm
+from flask_login import login_required, current_user
 
 
 app = create_app()
-todos = ['TODO 1', 'TODO 2', 'TODO 3']
+
 
 @app.cli.command()
 def test():
     tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner().run(tests)
-
-
-
 
 @app.errorhandler(404)
 def not_found(error):
@@ -41,15 +39,24 @@ def index():
 
     return response
 
-@app.route('/hello', methods=['GET'])
+@app.route('/hello', methods=['GET', 'POST'])
+@login_required
 def hello():
     user_ip = session.get('user_ip')
-    username = session.get('username')
+    username = current_user.id
+
+    todo_form = TodoForm()
 
     context = {
         'user_ip': user_ip,
-        'todos': todos,
-        'username': username
+        'todos': get_todos(user_id=username),
+        'username': username,
+        'todo_form':todo_form
     }
-    
+
+    if todo_form.validate_on_submit():
+        set_todo(user_id=username, description=todo_form.description.data)
+        flash('Tu tarea se creo con éxito')
+
+        return redirect(url_for('hello')) 
     return render_template('hello.html', **context)

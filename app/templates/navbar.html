@@ -4,4 +4,10 @@
     <img src="{{ url_for('static', filename='img/todo.png')}}" width="40" height="40" class="d-inline-block align-top" alt="">
     TODO-LIST
   </a>
+
+  <ul class="nav navbar-nav">
+    {% if current_user.is_authenticated %}
+      <li><a href="{{url_for('auth.logout')}}">Logout</a></li>
+    {% endif%}
+  </ul>
 </nav>

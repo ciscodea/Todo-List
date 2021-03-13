@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{ super() }}
+    Signup
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Registra una cuenta</h1>
+        <form  method="POST">
+            {{ signup_form.csrf_token }}
+
+            <div class="form-group">
+                <label for="username">{{ signup_form.username.label}}</label>
+                {{ signup_form.username(class_='form-control') }}
+            </div>
+
+            <div class="form-group">
+                <label for="password">{{ signup_form.password.label}}</label>
+                {{ signup_form.password(class_='form-control') }}
+            </div>
+
+            {{ signup_form.submit(class_='btn btn-primary') }}
+            
+        </form>
+    </div>
+{% endblock %}
