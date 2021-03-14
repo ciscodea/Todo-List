@@ -7,14 +7,14 @@
         </div>
 
         <div class="p-2">
-            <button type="button" class="btn btn-outline-warning">
                 {% if todo.to_dict().done %}
-                    Done
+                    <a class="btn btn-outline-success" href="{{ url_for('update', todo_id=todo.id, done=todo.to_dict().done)}}">Done </a>
+                    
                 {% else %}
-                    To-do
+                    <a class="btn btn-outline-warning" href="{{ url_for('update', todo_id=todo.id, done=todo.to_dict().done)}}">To-do </a>
                 {% endif %}
-            </button>
-
+            
+           
         </div>
         <div class="p-2">
             <a class="btn btn-outline-danger" href="{{ url_for('delete', todo_id=todo.id)}}">Delete</a>
